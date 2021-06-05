@@ -46,3 +46,16 @@ exports.postProducts = async (req,res,next) => {
         res.send(err)
     }
 }
+exports.findProducts =  async (req,res,next) => {
+    try{
+        const title_candy = req.params.title
+        console.log(req.params.title)
+
+        
+        const candy = await Candy.findOne({title : title_candy})
+        res.status(200).json({ message: "Candy fetched!", candy: candy });
+    }
+    catch(err){
+        res.setEncoding(err)
+    }
+}
