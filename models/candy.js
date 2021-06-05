@@ -3,9 +3,9 @@ const Schema = mongoose.Schema
 
 const Candy = new Schema(
 {
-    title:{type: String,require:true},
-    price: {type:Number,require:true},
-    owner: {type:String,require:true},
+    title:{type: String,required:true},
+    price: {type:Number,required:true},
+    owner: {type:String,required:true},
     package:[{type:String}]
 },
 {

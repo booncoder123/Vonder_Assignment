@@ -36,7 +36,7 @@ exports.postProducts = async (req,res,next) => {
             package: pack
           });
     
-          candy.save();
+          await candy.save();
           res.status(201).json({ message: "Candy created!", candy: candy });
         
         console.log("Candy yum!")
