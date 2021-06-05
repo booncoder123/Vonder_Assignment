@@ -7,15 +7,9 @@ const app =express()
 const shopRoute = require('./routes/shop')
 
 app.use(express.json());
-<<<<<<< HEAD
-app.use(express.urlencoded({ extended: false }));   
-app.use(shopRoute)
-app.use('/admin',admin)
-=======
 app.use(express.urlencoded({ extended: false }));
 app.use(shopRoute)
-app.use(admin)
->>>>>>> main
+app.use('/admin',admin)
 app.use(errorRoutes.errorPage)
 mongoConnect()
 app.listen(3000)
