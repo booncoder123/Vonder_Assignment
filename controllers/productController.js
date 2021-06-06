@@ -19,6 +19,9 @@ exports.getProducts = async (req,res,next) => {
     }
 }
 
+function isString(value) {
+	return typeof value === 'string' || value instanceof String;
+}
 
 exports.postProducts = async (req,res,next) => {
     console.log("POST")
@@ -27,7 +30,13 @@ exports.postProducts = async (req,res,next) => {
         const price = req.body.price
         const owner = req.body.owner
         const pack = req.body.package
-
+        
+        if(!isString(title))
+            throw new  Error('Title value must be a string')
+        if(!isString(owner))
+            throw new  Error('Owner value must be a string')
+        if(price + 0 != price)
+            throw new Error('Price value must be a number type')
        
         const candy = new Candy({
             title : title,
@@ -37,13 +46,13 @@ exports.postProducts = async (req,res,next) => {
           });
     
           await candy.save();
-          res.status(201).json({ message: "Candy created!", candy: candy });
+          res.status(200).json({ message: "Candy created!", candy: candy });
         
         console.log("Candy yum!")
 
     } catch(err){
         console.log("err: ",err)
-        res.send(err)
+        res.status(404).json({ message: "Candy Error!", error: err.message });
     }
 }
 exports.findProducts =  async (req,res,next) => {
@@ -56,7 +65,7 @@ exports.findProducts =  async (req,res,next) => {
         res.status(200).json({ message: "Candy fetched!", candy: candy });
     }
     catch(err){
-        res.setEncoding(err)
+        res.status(404).json({ message: "Candy Error! ID id invalid", error: err.message });
     }
 }
 
@@ -65,12 +74,11 @@ exports.deleteProductById =  async (req,res,next) => {
         const id_candy = req.params.id
         console.log(req.params.id)
 
-        
         const candy = await Candy.findByIdAndDelete({_id : id_candy})
-        res.status(200).json({ message: "Candy fetched!", candy: candy });
+        res.status(200).json({ message: "Candy Deleted!", candy: candy });
     }
     catch(err){
-        res.setEncoding(err)
+        res.status(404).json({ message: "Candy Error! ID id invalid", error: err.message });
     }
 }
 
@@ -84,6 +92,14 @@ exports.updateProducts = async (req,res,next) => {
         const price = req.body.price
         const owner = req.body.owner
         const pack = req.body.package
+
+        
+        if(!isString(title))
+            throw new  Error('Title value must be a string')
+        if(!isString(owner))
+            throw new  Error('Owner value must be a string')
+        if(price + 0 != price)
+            throw new Error('Price value must be a number type')
         
 
        
@@ -101,6 +117,6 @@ exports.updateProducts = async (req,res,next) => {
 
     } catch(err){
         console.log("err: ",err)
-        res.send(err)
+        res.status(404).json({ message: "Candy Error!", error: err.message });
     }
 }
