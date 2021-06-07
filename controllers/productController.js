@@ -61,7 +61,20 @@ exports.findProducts =  async (req,res,next) => {
         console.log(req.params.title)
 
         
-        const candy = await Candy.findOne({title : title_candy})
+        const candy = await Candy.findOne({title : title_candy},(candy) => {
+            try{
+                if(candy===null)
+                {
+                    throw Error("Cannot find the object!")
+                }
+            }
+            catch(err){
+                res.status(404).json({ message: "Candy Error! cannot find candy", error: err.message });
+            }
+                
+
+        })
+        
         res.status(200).json({ message: "Candy fetched!", candy: candy });
     }
     catch(err){
