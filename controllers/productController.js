@@ -52,7 +52,10 @@ exports.postProducts = async (req,res,next) => {
 
     } catch(err){
         console.log("err: ",err)
-        res.status(404).json({ message: "Candy Error!", error: err.message });
+        if (!err.status) {
+            err.status = 500;
+          }
+        next(err)
     }
 }
 exports.findProducts =  async (req,res,next) => {

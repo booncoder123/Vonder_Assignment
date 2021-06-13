@@ -6,15 +6,25 @@ const admin = require('./routes/admin')
 const shopRoute = require('./routes/shop')
 const app =express()
 
+app.use(async (req, res, next) => {
+    await mongoConnect();
+    next();
+  });
+
+  
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(shopRoute)
 app.use('/admin',admin)
+
+app.use((err, req, res, next) => {
+    console.log("ERROR: ", err);
+    res.status(err.status || 500).json({ message: "Candy fail!", error : err.message });
+  });
 app.use(errorRoutes.errorPage)
 
 
 
-mongoConnect()
 app.listen(3000)
 
 
