@@ -48,7 +48,7 @@ exports.postProducts = async (req,res,next) => {
           await candy.save();
           res.status(200).json({ message: "Candy created!", candy: candy });
         
-        console.log("Candy yum!")
+        console.log("Candy Yum Yum!")
 
     } catch(err){
         console.log("err: ",err)
