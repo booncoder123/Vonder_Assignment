@@ -68,7 +68,7 @@ exports.findProducts =  async (req,res,next) => {
             try{
                 if(candy===null)
                 {
-                    throw Error("Cannot find the object!")
+                    throw Error("Cannot find the object2222!")
                 }
             }
             catch(err){
